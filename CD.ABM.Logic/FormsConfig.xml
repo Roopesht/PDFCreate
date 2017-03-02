@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FormsConfig>
+  <BlockR1GrpRText>
+    <MainQuestion>Value Creation and Impact</MainQuestion>
+    <SubQuestions>
+      <Question>Depth of expertise contributes to the overall success of the project</Question>
+      <Question>Develops clear recommendations with an action bias</Question>
+      <Question>Networks within client organization to understand agenda</Question>
+      <Question>Is able to assess implementation challenges</Question>
+      <Question>Applies expertise to generate superior and sustainable results for client; is committed to making change happen</Question>
+      <Question>Effectively transfers capabilities to client teams</Question>
+    </SubQuestions>
+  </BlockR1GrpRText>
+</FormsConfig>
+
+

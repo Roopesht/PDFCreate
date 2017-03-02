@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CD.ABM.Logic.Blocks.BasicPDFBlock">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAgAAAAAIAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Blocks\BasicPDFBlock.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CD.ABM.Logic.Blocks.BlockR1GrpRText" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Blocks\BlockR1GrpRText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CD.ABM.Logic.PDF.PDFConfig" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAA=</HashCode>
+      <FileName>PDF\PDFConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CD.ABM.Logic.PDF.PDFDoc" Collapsed="true">
+    <Position X="5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAACAIgABAAAIACAAAAAAAAACAQAAEAGAABg=</HashCode>
+      <FileName>PDF\PDFDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CD.ABM.Logic.PDF.PDFFont" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PDF\PDFFont.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CD.ABM.Logic.PDF.PDFPageSize" Collapsed="true">
+    <Position X="5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAABAAAAAgIAAAAAEAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>PDF\PDFPageSize.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="CD.ABM.Logic.Blocks.IBlock">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Blocks\IBlock.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
