@@ -6,10 +6,10 @@ namespace CD.Console
         static void Main(string[] args)
         {
             string filename = @"D:\abc.pdf";
-            PDFDoc doc = new PDFDoc(filename, new PDFConfig(""));
+            PDFDoc doc = new PDFDoc(filename, "Expert");
             doc.ConstructPDF();
             doc.Close();
-            SystemUtil.Execute(filename);
+            SystemUtil.OpenFile(filename);
         }
     }
 }

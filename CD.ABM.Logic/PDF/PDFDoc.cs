@@ -1,12 +1,9 @@
-﻿using iTextSharp.text;
+﻿using CD.ABM.Logic.Drawing;
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CD.ABM.Logic.Drawing;
 
 namespace CD.ABM.Logic.PDF
 {
@@ -16,20 +13,46 @@ namespace CD.ABM.Logic.PDF
         private PdfWriter writer;
         PdfContentByte cb =null;
         private PDFPageSize pageSize;
-        PDFConfig config;
+        List<PDFConfig> config;
+        private PdfStamper stamper;
+        private String filename;
+        private PdfReader reader;
+        private string filenameBlank;
+
+        public PdfStamper Stamper
+        {
+            get
+            {
+
+                return stamper;
+            }
+        }
         
         private PDFDoc ()
         {
             //Declared a empty constructor to make it private
         }
-        public PDFDoc(String filename, PDFConfig _config)
+        public void GetReader()
         {
-            FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+            reader = new PdfReader(filenameBlank);
+            stamper = new PdfStamper(reader, new FileStream(filename, FileMode.Create));
+            writer = stamper.Writer;
+        }
+
+        public PDFDoc(String _filename, String formName)
+        {
+            filename = _filename;
+            filenameBlank = _filename.Replace(".", "_Blank.");
+            FileStream fs = new System.IO.FileStream(filenameBlank, System.IO.FileMode.Create);
             writer = PdfWriter.GetInstance(doc, fs);
             SetPageProperties();
             doc.Open();
             cb = writer.DirectContent;
-            config = _config;
+            //Based on the formName, populate the Config
+            config = new List<PDFConfig>();
+            config.Add(new PDFConfig("1"));
+            config.Add(new PDFConfig("2"));
+
         }
 
         public void ConstructPDF()
@@ -38,8 +61,14 @@ namespace CD.ABM.Logic.PDF
             //Read the config and
             Blocks.BlockR1GrpRText block = new Blocks.BlockR1GrpRText(this, new PDFConfig("1"));
             curY = block.Draw();
-            block = new Blocks.BlockR1GrpRText(this, new PDFConfig("2"));
-            block.Draw(curY-20);
+
+            //block = new Blocks.BlockR1GrpRText(this, new PDFConfig("2"));
+            //block.Draw(curY-20);
+
+
+            //TODO: Loop through PDFConfig List, and instantiate the BlockR1GrpRText
+            //TODO: Execute the instantiated blocks in sequence
+            //TODO: Based on the page number, either pass the Current Y position
         }
 
 
@@ -52,7 +81,7 @@ namespace CD.ABM.Logic.PDF
             
         public PdfWriter Writer
         {
-            get { return writer; }
+            get { return stamper.Writer; }
         }
         public PdfContentByte PDFcb {
             get { return cb; }
@@ -121,13 +150,57 @@ namespace CD.ABM.Logic.PDF
             return columnText4.YLine;
         }
 
+        public void AddTextField(POCO.Input input, Rectangle rect)
+        {
+            TextField tf = new TextField(Writer, rect, input.IDRef);
+            tf.BorderColor = BaseColor.BLACK;
+            tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
+            tf.Text = input.DefaultValue;
+            stamper.AddAnnotation(tf.GetTextField(), 1);
+            return;
+        }
+
+        public void AddRadio(List<POCO.Input > inputs )
+        {
+            PdfFormField group = PdfFormField.CreateRadioButton(writer, true);
+            RadioCheckField tf=null;
+            int i = 0;
+            foreach (POCO.Input input in inputs)
+            {
+                Rectangle rect = new Rectangle(40, 806 - i * 40, 60, 600 - i * 40);
+                tf = new RadioCheckField(Writer, input.Rect, null, input.IDRef);
+                tf.BackgroundColor = new GrayColor(0.8f);
+                tf.BorderColor = GrayColor.BLACK;
+                tf.CheckType = RadioCheckField.TYPE_CIRCLE;
+                tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
+                group.AddKid(tf.RadioField);                
+                stamper.AddAnnotation(tf.RadioField, 1);
+                i++;
+            }
+        }
+
         public float AddText(Rectangle rec, String text)
         {
             return AddText(rec, text, BaseColor.BLACK);
         }
         public bool Close()
         {
-            this.doc.Close();
+            if (this.doc.IsOpen())
+                this.doc.Close();
+            try
+            {
+                stamper.Close();
+                reader.Close();
+            }
+            catch(Exception e)
+            {}
+            try
+            {
+                writer.Flush();
+                writer.Close();
+            }
+            catch (Exception ex)
+            {}
             return true;
         }
         public void AddNewPage ()

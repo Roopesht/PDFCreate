@@ -9,9 +9,9 @@ using CD.ABM.Logic.Drawing;
 
 namespace CD.ABM.Logic.Blocks
 {
-    class BlockR1GrpRText : BasicPDFBlock
+    class FirstPage : BasicPDFBlock
     {
-        public BlockR1GrpRText(PDFDoc _doc, PDFConfig _config)
+        public FirstPage(PDFDoc _doc, PDFConfig _config)
         {
             doc = _doc;
             config = _config;
@@ -36,22 +36,15 @@ namespace CD.ABM.Logic.Blocks
             rect = new Rectangle(rect.Left, curY - 25, 270, curY - 10);
             doc.AddRectange(rect, BaseColor.GREEN);
             curY = doc.AddText(rect, "Overall", BaseColor.WHITE);
-            List<POCO.Input> radios = new List<POCO.Input>();
+
             curY = doc.AddText(rect.OffSetRectByXAxis(100), "NA", BaseColor.WHITE);
-            radios.Add(config.Inputs[0].AddRectangle(rect.OffSetRectByXAxis(100).OffSetRectByYAxis(100)));
             curY = doc.AddText(rect.OffSetRectByXAxis(125), "1", BaseColor.WHITE);
-            radios.Add(config.Inputs[1].AddRectangle(rect.OffSetRectByXAxis(125).OffSetRectByYAxis(100)));
             curY = doc.AddText(rect.OffSetRectByXAxis(150), "2", BaseColor.WHITE);
-            radios.Add(config.Inputs[2].AddRectangle(rect.OffSetRectByXAxis(150).OffSetRectByYAxis(100)));
             curY = doc.AddText(rect.OffSetRectByXAxis(175), "3", BaseColor.WHITE);
-            radios.Add(config.Inputs[3].AddRectangle(rect.OffSetRectByXAxis(175).OffSetRectByYAxis(100)));
             curY = doc.AddText(rect.OffSetRectByXAxis(200), "4", BaseColor.WHITE);
-            radios.Add(config.Inputs[4].AddRectangle(rect.OffSetRectByXAxis(200).OffSetRectByYAxis(100)));
             curY = doc.AddText(rect.OffSetRectByXAxis(225), "5", BaseColor.WHITE);
-            doc.Close();
-            doc.GetReader();
-            doc.AddRadio(radios);
-            doc.AddTextField(new POCO.Input (POCO.InputTypes.TextBox, "abc","abc" ), rect.OffSetRectByXAxis(225));
+
+            Doc.Writer.Flush();
             return curY;
         }
     }

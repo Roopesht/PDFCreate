@@ -9,7 +9,7 @@ namespace CD.Console
 {
     class SystemUtil
     {
-        public static void Execute(String cmd)
+        public static void OpenFile(String cmd)
         {
             Process proc = null;
             string batDir = string.Format(@"C:\");
@@ -18,7 +18,7 @@ namespace CD.Console
             proc.StartInfo.FileName = cmd;
             proc.StartInfo.CreateNoWindow = false;
             proc.Start();
-            proc.WaitForExit();
+            //proc.WaitForExit();
         }
     }
 }

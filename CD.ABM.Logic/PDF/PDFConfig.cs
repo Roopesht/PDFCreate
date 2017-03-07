@@ -11,7 +11,12 @@ namespace CD.ABM.Logic.PDF
     {
         private String mainQuestion;
         private List<String> subQuestions;
+        private List<POCO.Input> inputs;
 
+        public List<POCO.Input>  Inputs
+        {
+            get { return inputs; }
+        }
         public String MainQuestion
         {
             get {return mainQuestion; }
@@ -33,6 +38,14 @@ namespace CD.ABM.Logic.PDF
             "Applies expertise to generate superior and sustainable results for client; is committed to making change happen",
             "Effectively transfers capabilities to client teams"};
             }
+            inputs = new List<POCO.Input>()
+            {
+                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_1", "Val1"),
+                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_2", "Val2"),
+                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_3", "Val3"),
+                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_4", "Val4"),
+                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_5", "Val5")
+            };
             if (xml =="2")
             {
                 mainQuestion = "Insight and Intellectual Leadership in Area of Expertise";

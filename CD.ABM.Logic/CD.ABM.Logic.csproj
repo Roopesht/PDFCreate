@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Blocks\BasicPDFBlock.cs" />
+    <Compile Include="Blocks\FirstPage.cs" />
     <Compile Include="Blocks\BlockR1GrpRText.cs" />
     <Compile Include="Blocks\IBlock.cs" />
     <Compile Include="Drawing\Helpers.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="PDF\PDFPageSize.cs" />
     <Compile Include="PDF\PDFFont.cs" />
     <Compile Include="PDF\PDFDoc.cs" />
+    <Compile Include="POCO\Input.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
