@@ -21,6 +21,7 @@ namespace CD.ABM.Logic.PDF
         private PdfReader reader;
         private string filenameBlank;
         private List<Action> drawingFuncs = new List<Action>();
+        private Random rand = new Random(100);
 
         public PdfStamper Stamper
         {
@@ -210,14 +211,33 @@ namespace CD.ABM.Logic.PDF
            });
             return;
         }
-        private Random rand = new Random(100);
+
+
         public float AddRadioGroup(String Id, Rectangle rectStart, List<String> labels, int distance) 
         {
             float curY = rectStart.Top;
             drawingFuncs.Add(() =>
             {
 
+                PdfFormField group = PdfFormField.CreateRadioButton(writer, true);
+                String groupname = "grp" + rand.Next().ToString();
+                group.FieldName = groupname;
+                RadioCheckField tf = null;
+                int i = 0;
+                foreach (String s in labels)
+                {
+                    tf = new RadioCheckField(Writer, rectStart, groupname + "_chk" + i.ToString(), i.ToString());
+                    tf.BackgroundColor = new GrayColor(0.8f);
+
+                    tf.BorderColor = GrayColor.BLACK;
+                    tf.CheckType = RadioCheckField.TYPE_CIRCLE;
+                    tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
+                    group.AddKid(tf.RadioField);
+                    i++;
+                }
+                stamper.AddAnnotation(group, 1);
             });
+
             return curY;
         }
 

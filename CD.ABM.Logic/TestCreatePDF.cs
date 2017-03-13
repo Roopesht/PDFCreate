@@ -72,8 +72,43 @@ namespace CD.ABM.Logic
                 //radioField.BorderWidth = 1;
                 radioField.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
                 group.AddKid(radioField.RadioField);
+
+                
             }
+            group.SetAdditionalActions(PdfName.E, PdfAction.JavaScript("app.alert(validate);",writer));
             stamper.AddAnnotation(group, 1);
+
+
+            //Add submit button
+            rect = new Rectangle(rect.Left, rect.Top - 100, rect.Right, rect.Bottom - 25);
+            PushbuttonField button = new PushbuttonField(writer, rect, "postSubmit");
+            button.FontSize =20;
+            button.BackgroundColor = BaseColor.LIGHT_GRAY;
+            button.BorderColor = GrayColor.BLACK;
+            button.BorderWidth = 1f;
+            button.BorderStyle = PdfBorderDictionary.STYLE_BEVELED;
+            button.TextColor = GrayColor.GREEN;
+            button.FontSize = 8f;
+            button.Text = "Submit";
+            button.Visibility = PushbuttonField.VISIBLE_BUT_DOES_NOT_PRINT;
+            PdfFormField field = button.Field;  
+            field.Put(PdfName.TU, new PdfString("Save changes and return to the folder."));
+            String javascript = "validate();";
+            field.Action = PdfAction.JavaScript(javascript, writer);
+
+            //field.Action = PdfAction.CreateSubmitForm( @"rtayaloor@sapient.com", null, PdfAction.SUBMIT_HTML_FORMAT | PdfAction.SUBMIT_INCLUDE_NO_VALUE_FIELDS);
+            stamper.AddAnnotation(field, 1);
+            PdfAcroForm f = new PdfAcroForm(writer);
+
+
+            //Add common Javascript code
+            writer.AddJavaScript("var requiredFields = ['text1', 'grp1'];");
+            string validateFunction = "function validate () { " +
+                " for (i=0; i<requiredFields.length; i++) {" +
+                " var grp = this.getField(requiredFields[i]);  if (!grp || grp.value === null || grp.value == ''|| grp.value=='Off') { " + 
+                " app.alert('please select this '+ requiredFields[i]); return false; }}" +
+            "return true}";
+            writer.AddJavaScript(validateFunction);
 
 
             //Close all the streams

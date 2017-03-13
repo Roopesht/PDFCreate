@@ -8,8 +8,9 @@ namespace CD.Console
         {
 
             //TestCreatePDF pdf = new TestCreatePDF();
-
+            //SystemUtil.OpenFile(@"D:\a1.pdf");
             CreatePDF();
+            
         }
 
         private static void CreatePDF()
