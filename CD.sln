@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CD.ABM.Console", "CD.Console\CD.ABM.Console.csproj", "{F337AC25-A34F-4CAB-9A36-8162501D6374}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16E814EE-0459-4E08-B0A0-44F355DB9D59} = {16E814EE-0459-4E08-B0A0-44F355DB9D59}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CD.ABM.Logic", "CD.ABM.Logic\CD.ABM.Logic.csproj", "{16E814EE-0459-4E08-B0A0-44F355DB9D59}"
 EndProject

@@ -210,7 +210,7 @@ namespace CD.ABM.Logic.PDF
            });
             return;
         }
-        private Random rand = new Random(10000);
+        private Random rand = new Random(100);
         public float AddRadioGroup(String Id, Rectangle rectStart, List<String> labels, int distance) 
         {
             float curY = rectStart.Top;
@@ -226,32 +226,22 @@ namespace CD.ABM.Logic.PDF
             drawingFuncs.Add(() =>
             {
                 PdfFormField group = PdfFormField.CreateRadioButton(writer, true);
-                stamper.AddAnnotation(group, 1);
+                String groupname = "grp" + rand.Next().ToString();
+                group.FieldName = groupname;
                 RadioCheckField tf = null;
                 int i = 0;
                 foreach (POCO.Input input in inputs)
                 {
-                    group.FieldName = "grp" + rand.Next().ToString();
-                    tf = new RadioCheckField(Writer, input.Rect,input.IDRef + rand.Next().ToString(),"1");
+                    tf = new RadioCheckField(Writer, input.Rect, groupname + "_chk" + i.ToString(),i.ToString());
                     tf.BackgroundColor = new GrayColor(0.8f);
+
                     tf.BorderColor = GrayColor.BLACK;
                     tf.CheckType = RadioCheckField.TYPE_CIRCLE;
-                    tf.BorderWidth = 1;
                     tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
                     group.AddKid(tf.RadioField);
-                    //stamper.AddAnnotation(tf.RadioField, 1);
-
-
-                    TextField tf1 = new TextField(Writer, input.Rect, input.IDRef + rand.Next().ToString());
-                    tf1.BorderWidth = 1;
-                    tf1.BackgroundColor = new GrayColor(0.8f);
-                    tf1.BorderColor = GrayColor.BLACK;
-                    stamper.AddAnnotation(tf1.GetTextField(), 1);
                     i++;
-
                 }
-                //stamper.AddAnnotation(group, 1);
-
+                stamper.AddAnnotation(group, 1);
             });
         }
 
