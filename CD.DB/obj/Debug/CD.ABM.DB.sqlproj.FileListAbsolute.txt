@@ -1,6 +1,0 @@
-D:\Projects\CD\CD\CD.DB\bin\Debug\CD.ABM.DB.dacpac
-D:\Projects\CD\CD\CD.DB\bin\Debug\CDDB.accdb
-D:\Projects\CD\CD\CD.DB\bin\Debug\CD.DB.dll
-D:\Projects\CD\CD\CD.DB\bin\Debug\CD.DB.pdb
-D:\Projects\CD\CD\CD.DB\obj\Debug\CD.DB.dll
-D:\Projects\CD\CD\CD.DB\obj\Debug\CD.DB.pdb
