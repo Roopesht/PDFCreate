@@ -7,3 +7,15 @@ D:\Projects\CD\CD.Console\CD.Console\obj\Debug\CD.Console.exe
 D:\Projects\CD\CD.Console\CD.Console\obj\Debug\CD.Console.pdb
 D:\Projects\CD\CD.Console\CD.Console\bin\Debug\CD.ABM.Logic.dll
 D:\Projects\CD\CD.Console\CD.Console\bin\Debug\CD.ABM.Logic.pdb
+D:\Projects\CD\CD\CD.Console\bin\Debug\CD.Console.exe.config
+D:\Projects\CD\CD\CD.Console\bin\Debug\CD.Console.exe
+D:\Projects\CD\CD\CD.Console\bin\Debug\CD.Console.pdb
+D:\Projects\CD\CD\CD.Console\bin\Debug\CD.ABM.Logic.dll
+D:\Projects\CD\CD\CD.Console\bin\Debug\itextsharp.dll
+D:\Projects\CD\CD\CD.Console\bin\Debug\CD.ABM.Logic.pdb
+D:\Projects\CD\CD\CD.Console\obj\Debug\CD.ABM.Console.csprojResolveAssemblyReference.cache
+D:\Projects\CD\CD\CD.Console\obj\Debug\CD.Console.exe
+D:\Projects\CD\CD\CD.Console\obj\Debug\CD.Console.pdb
+D:\Projects\CD\CD\CD.Console\bin\Debug\DALC4NET.dll
+D:\Projects\CD\CD\CD.Console\bin\Debug\DALC4NET.pdb
+D:\Projects\CD\CD\CD.Console\bin\Debug\App.config

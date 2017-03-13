@@ -47,11 +47,15 @@
     <Compile Include="Blocks\FirstPage.cs" />
     <Compile Include="Blocks\BlockR1GrpRText.cs" />
     <Compile Include="Blocks\IBlock.cs" />
+    <Compile Include="DALC\FormsDALOld.cs" />
+    <Compile Include="DALC\FormsDAL.cs" />
+    <Compile Include="Drawing\DrawingArea.cs" />
     <Compile Include="Drawing\Helpers.cs" />
     <Compile Include="PDF\PDFConfig.cs" />
     <Compile Include="PDF\PDFPageSize.cs" />
     <Compile Include="PDF\PDFFont.cs" />
     <Compile Include="PDF\PDFDoc.cs" />
+    <Compile Include="POCO\BlockItem.cs" />
     <Compile Include="POCO\Input.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,6 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\rtayal\Downloads\DALC4NETSourceCode\DALC4NET\DALC4NET.csproj">
+      <Project>{e5ad1678-cf38-446a-a978-17254bd099de}</Project>
+      <Name>DALC4NET</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

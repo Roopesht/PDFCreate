@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CD.ABM.Logic.Drawing;
+using CD.ABM.Logic.POCO;
 
 namespace CD.ABM.Logic.Blocks
 {
@@ -23,35 +24,49 @@ namespace CD.ABM.Logic.Blocks
             return Draw(curY);
         }
 
-        public override float Draw(float curY)
+        public override float Draw(float _curY)
         {
-            float start = curY;
+            //Try this: send the parameter (bool simulation), and check the YLine towards the end
+            float curY= _curY, curX;
 
             Rectangle rect = Doc.AddRectange(10, curY - 15, doc.PageSize.Width - 10, curY, BaseColor.GREEN);
             curY = Doc.AddText(rect, config.MainQuestion, BaseColor.WHITE) + 10;
 
-            rect = new Rectangle(rect.Left, curY -15, 270, curY);
+            rect = new Rectangle(rect.Left, curY -15, 300, curY);
             curY = doc.AddText(rect.OffSetRectByYAxis( 15), config.SubQuestions, BaseColor.LIGHT_GRAY);
+            //Input input = (Input)config.Inputs.Select(item => item.Identifer == "overall");
+            //if (input != null)
+            {
+                rect = new Rectangle(rect.Left, curY - 25, 300, curY - 10);
+                doc.AddRectange(rect, BaseColor.GREEN);
+                curY = doc.AddText(rect, "Overall", BaseColor.WHITE);
+                //curY = doc.AddRadioGroup(input.IDRef, );
+            }
 
-            rect = new Rectangle(rect.Left, curY - 25, 270, curY - 10);
-            doc.AddRectange(rect, BaseColor.GREEN);
-            curY = doc.AddText(rect, "Overall", BaseColor.WHITE);
             List<POCO.Input> radios = new List<POCO.Input>();
-            curY = doc.AddText(rect.OffSetRectByXAxis(100), "NA", BaseColor.WHITE);
-            radios.Add(config.Inputs[0].AddRectangle(rect.OffSetRectByXAxis(100).OffSetRectByYAxis(100)));
-            curY = doc.AddText(rect.OffSetRectByXAxis(125), "1", BaseColor.WHITE);
-            radios.Add(config.Inputs[1].AddRectangle(rect.OffSetRectByXAxis(125).OffSetRectByYAxis(100)));
-            curY = doc.AddText(rect.OffSetRectByXAxis(150), "2", BaseColor.WHITE);
-            radios.Add(config.Inputs[2].AddRectangle(rect.OffSetRectByXAxis(150).OffSetRectByYAxis(100)));
-            curY = doc.AddText(rect.OffSetRectByXAxis(175), "3", BaseColor.WHITE);
-            radios.Add(config.Inputs[3].AddRectangle(rect.OffSetRectByXAxis(175).OffSetRectByYAxis(100)));
-            curY = doc.AddText(rect.OffSetRectByXAxis(200), "4", BaseColor.WHITE);
-            radios.Add(config.Inputs[4].AddRectangle(rect.OffSetRectByXAxis(200).OffSetRectByYAxis(100)));
-            curY = doc.AddText(rect.OffSetRectByXAxis(225), "5", BaseColor.WHITE);
-            doc.Close();
-            doc.GetReader();
+            Rectangle radioRect = new Rectangle(rect.Left, rect.Top, rect.Left + 15, rect.Bottom  );
+            curX = 100;
+            curY = doc.AddText(rect.OffSetRectByXAxis(curX), "NA", BaseColor.WHITE);
+            radios.Add(config.Inputs[0].AddRectangle(radioRect.OffSetRectByXAxis(curX + 20)));
+            curX += 35;
+            curY = doc.AddText(rect.OffSetRectByXAxis(curX), "1", BaseColor.WHITE);
+            radios.Add(config.Inputs[1].AddRectangle(radioRect.OffSetRectByXAxis(curX + 15)));
+            curX += 25;
+            curY = doc.AddText(rect.OffSetRectByXAxis(curX), "2", BaseColor.WHITE);
+            radios.Add(config.Inputs[2].AddRectangle(radioRect.OffSetRectByXAxis(curX + 15)));
+            curX += 25;
+            curY = doc.AddText(rect.OffSetRectByXAxis(curX), "3", BaseColor.WHITE);
+            radios.Add(config.Inputs[3].AddRectangle(radioRect.OffSetRectByXAxis(curX + 15)));
+            curX += 25;
+            curY = doc.AddText(rect.OffSetRectByXAxis(curX), "4", BaseColor.WHITE);
+            radios.Add(config.Inputs[4].AddRectangle(radioRect.OffSetRectByXAxis(curX + 15)));
+            curX += 25;
+            curY = doc.AddText(rect.OffSetRectByXAxis(curX), "5", BaseColor.WHITE);
+            radios.Add(config.Inputs[5].AddRectangle(radioRect.OffSetRectByXAxis(curX + 15)));
             doc.AddRadio(radios);
-            doc.AddTextField(new POCO.Input (POCO.InputTypes.TextBox, "abc","abc" ), rect.OffSetRectByXAxis(225));
+            Rectangle bigTextRect = new Rectangle(300, _curY - 15, doc.PageSize.Width - 10, curY+5);
+            Input input = new Input(InputTypes.TextBox, "bigtext", "text",bigTextRect);
+            doc.AddTextField(input, bigTextRect);
             return curY;
         }
     }

@@ -12,6 +12,7 @@ namespace CD.ABM.Logic.Blocks
     {
         protected PDFDoc doc = null;
         protected PDFConfig config = null;
+        static public int gap = 10;
         public PDFDoc Doc
         {
             get

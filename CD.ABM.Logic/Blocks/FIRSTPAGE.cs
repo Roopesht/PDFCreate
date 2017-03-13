@@ -1,11 +1,12 @@
 ﻿using CD.ABM.Logic.PDF;
-using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CD.ABM.Logic.Drawing;
+using iTextSharp.text;
 
 namespace CD.ABM.Logic.Blocks
 {
@@ -30,10 +31,10 @@ namespace CD.ABM.Logic.Blocks
             Rectangle rect = Doc.AddRectange(10, curY - 15, doc.PageSize.Width - 10, curY, BaseColor.GREEN);
             curY = Doc.AddText(rect, config.MainQuestion, BaseColor.WHITE) + 10;
 
-            rect = new Rectangle(rect.Left, curY -15, 270, curY);
+            rect = new Rectangle(rect.Left, curY -15, 300, curY);
             curY = doc.AddText(rect.OffSetRectByYAxis( 15), config.SubQuestions, BaseColor.LIGHT_GRAY);
 
-            rect = new Rectangle(rect.Left, curY - 25, 270, curY - 10);
+            rect = new Rectangle(rect.Left, curY - 25, 300, curY - 10);
             doc.AddRectange(rect, BaseColor.GREEN);
             curY = doc.AddText(rect, "Overall", BaseColor.WHITE);
 
