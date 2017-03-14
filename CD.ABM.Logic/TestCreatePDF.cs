@@ -90,7 +90,6 @@ namespace CD.ABM.Logic
                 Visibility = PushbuttonField.VISIBLE_BUT_DOES_NOT_PRINT
             };
             PdfFormField field = button.Field;  
-            field.Put(PdfName.TU, new PdfString("Save changes and return to the folder."));
             String javascript = "validate();";
             field.Action = PdfAction.JavaScript(javascript, writer);
 

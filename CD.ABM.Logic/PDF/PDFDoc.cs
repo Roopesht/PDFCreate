@@ -6,6 +6,7 @@ using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace CD.ABM.Logic.PDF
 {
@@ -94,14 +95,32 @@ namespace CD.ABM.Logic.PDF
                 Blocks.BlockR1GrpRText block = new Blocks.BlockR1GrpRText(this, config);
                 curY = block.Draw(curY) - 10;
             }
+
             Close();
             GetReader();
             //Call the functions parked 
+            AddSubmitButton();
             foreach (Action action in drawingFuncs)
             {
                 action.Invoke();
             }
+
+            JavaScript.addValidateFunction(writer);
+            JavaScript.addRequiredFields(writer, getListofAllItems());
+
+
             Close();
+        }
+
+        private List<string> getListofAllItems()
+        {
+            List<string> ret=new List<string>();
+            foreach (PDFConfig config in pdfConfig)
+            {
+                ret.AddRange(config.Inputs.Select(item => item.UniqueId).ToList());
+            }
+            return ret;
+
         }
 
         public PDFPageSize PageSize
@@ -230,29 +249,52 @@ namespace CD.ABM.Logic.PDF
             return curY;
         }
 
-/*        public void AddRadio(List<POCO.Input > inputs )
+        public void AddSubmitButton()
         {
-            drawingFuncs.Add(() =>
+            Rectangle rect = new Rectangle(50, 50, 100, 10);
+            PushbuttonField button = new PushbuttonField(writer, rect, "postSubmit")
             {
-                PdfFormField group = PdfFormField.CreateRadioButton(writer, true);
-                String groupname = "grp" + rand.Next().ToString();
-                group.FieldName = groupname;
-                RadioCheckField tf = null;
-                int i = 0;
-                foreach (POCO.Input input in inputs)
-                {
-                    tf = new RadioCheckField(Writer, input.Rect, groupname + "_chk" + i.ToString(),i.ToString());
-                    tf.BackgroundColor = new GrayColor(0.8f);
-                    tf.BorderColor = GrayColor.BLACK;
-                    tf.CheckType = RadioCheckField.TYPE_CIRCLE;
-                    tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
-                    group.AddKid(tf.RadioField);
-                    i++;
-                }
-                stamper.AddAnnotation(group, 1);
-            });
+                FontSize = 8,
+                BackgroundColor = BaseColor.LIGHT_GRAY,
+                BorderColor = GrayColor.BLACK,
+                BorderWidth = 1f,
+                BorderStyle = PdfBorderDictionary.STYLE_BEVELED,
+                TextColor = GrayColor.GREEN,
+                Text = "Submit",
+                Visibility = PushbuttonField.VISIBLE_BUT_DOES_NOT_PRINT
+            };
+            PdfFormField field = button.Field;
+            String javascript = "validate();";
+            field.Action = PdfAction.JavaScript(javascript, writer);
+            stamper.AddAnnotation(field, 1);
+
         }
-*/
+
+        /*        public void AddRadio(List<POCO.Input > inputs )
+                {
+                    drawingFuncs.Add(() =>
+                    {
+                        PdfFormField group = PdfFormField.CreateRadioButton(writer, true);
+                        String groupname = "grp" + rand.Next().ToString();
+                        group.FieldName = groupname;
+                        RadioCheckField tf = null;
+                        int i = 0;
+                        foreach (POCO.Input input in inputs)
+                        {
+                            tf = new RadioCheckField(Writer, input.Rect, groupname + "_chk" + i.ToString(),i.ToString());
+                            tf.BackgroundColor = new GrayColor(0.8f);
+                            tf.BorderColor = GrayColor.BLACK;
+                            tf.CheckType = RadioCheckField.TYPE_CIRCLE;
+                            tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
+                            group.AddKid(tf.RadioField);
+                            i++;
+                        }
+                        stamper.AddAnnotation(group, 1);
+                    });
+                }
+        */
+
+
         public float AddText(Rectangle rec, String text)
         {
             return AddText(rec, text, BaseColor.BLACK);

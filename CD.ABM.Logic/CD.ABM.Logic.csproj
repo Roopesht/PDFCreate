@@ -50,6 +50,7 @@
     <Compile Include="DALC\FormsDAL.cs" />
     <Compile Include="Drawing\DrawingArea.cs" />
     <Compile Include="Drawing\Helpers.cs" />
+    <Compile Include="PDF\JavaScript.cs" />
     <Compile Include="PDF\PDFConfig.cs" />
     <Compile Include="PDF\PDFPageSize.cs" />
     <Compile Include="PDF\PDFFont.cs" />
