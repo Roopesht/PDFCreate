@@ -2,9 +2,6 @@
 using iTextSharp.text;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CD.ABM.Logic.Drawing;
 using CD.ABM.Logic.POCO;
 

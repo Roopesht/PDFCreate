@@ -89,7 +89,7 @@ namespace CD.ABM.Logic.PDF
 
         public void ConstructPDF()
         {
-            float curY = PageSize.Height;
+            float curY = PageSize.Height-pageSize.TopMargin;
             foreach(PDFConfig config in pdfConfig)
             {
                 Blocks.BlockR1GrpRText block = new Blocks.BlockR1GrpRText(this, config);
