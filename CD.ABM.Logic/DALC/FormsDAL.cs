@@ -16,12 +16,12 @@ namespace CD.ABM.Logic.DALC
         }
         public List<String> GetBlocks (String formId)
         {
-            string sqlCommand = "SELECT BlockId from TemplateBlockMap where TemplateId = " + formId;
+            string sqlCommand = "SELECT Id from TemplateBlockMap where TemplateId = " + formId;
             OleDbDataReader reader = getReader(sqlCommand);
             List<String> blocks = new List<string>();
             while (reader.Read())
             {
-                String blockName = reader["BlockId"].ToString();
+                String blockName = reader["Id"].ToString();
                 blocks.Add(blockName);
             }
             return blocks;
@@ -39,17 +39,19 @@ namespace CD.ABM.Logic.DALC
             return cmd.ExecuteScalar().ToString();
         }
 
-        public List<BlockItem> getItems(string formId, string blockid)
+        public List<ItemRef> getItems(string formId, string blockid)
         {
 
-            List<BlockItem> items = new List<BlockItem>();
-            OleDbDataReader reader = getReader("select * from qryQuestions where id =" + formId + " and blockid =" + blockid );
+            List<ItemRef> items = new List<ItemRef>();
+            OleDbDataReader reader = getReader("select * from qryQuestions where id =" + formId + " and templateblockMapid =" + blockid );
             while (reader.Read())
             {
-                BlockItem item = new BlockItem();
-                item.FormGenIdentifer = reader["FormGenId"].ToString();
-                item.InputType = reader["inputtype"].ToString();
-                item.Question = reader["question"].ToString();
+                ItemRef item = new ItemRef(
+                    formsGenId: reader["FormGenId"].ToString(),
+                    inputType: reader["inputtype"].ToString(),
+                    question: reader["question"].ToString(),
+                    uniqueId: reader["QUESTION_CODE"].ToString()
+                );
                 items.Add(item);
             }
 

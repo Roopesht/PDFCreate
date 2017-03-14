@@ -9,29 +9,51 @@ namespace CD.ABM.Logic.PDF
     {
         private String mainQuestion;
         private List<String> subQuestions;
-        private List<POCO.Input> inputs;
+        private List<ItemRef> inputs;
 
-        public PDFConfig(List<BlockItem> items)
+        public ItemRef Comments
         {
-            mainQuestion = items.SingleOrDefault(item => item.FormGenIdentifer == "MainText").Question;
-            List<BlockItem> its = (List<BlockItem>)items.FindAll(item => item.FormGenIdentifer.Substring(0, 6) == "SubQue");
-            subQuestions = its.Select(item => item.Question).ToList();
-
-            //subQuestions = (List<String>)from BlockItem s in items where s.FormGenIdentifer.Substring(0, 6) == "SubQue" select (String)s.Question;
-            inputs = new List<POCO.Input>()
+            get
             {
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_1", "Val1"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_2", "Val2"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_3", "Val3"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_4", "Val4"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_5", "Val5"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_6", "Val6")
-
-            };
-
+                return inputs.Find(item => item.FormGenId == "Comments");
+            }
         }
 
-        public List<POCO.Input>  Inputs
+        public ItemRef OverAll
+        {
+            get
+            {
+                return inputs.Find(item => item.FormGenId == "OverallRadio");
+            }
+        }
+
+
+        private void extractMainQuestion(List<ItemRef> items)
+        {
+            ItemRef it = items.SingleOrDefault(item => item.FormGenId == "MainText");
+            mainQuestion = it.Question;
+            items.Remove(it);
+        }
+
+        private void ExtractSubQuestions(List<ItemRef> items)
+        {
+            List<ItemRef> its = items.FindAll(item => item.FormGenId.Substring(0, 6) == "SubQue");
+            subQuestions = its.Select(item => item.Question).ToList();
+            for(int counter=its.Count-1; counter>=0; counter--)
+            {
+                items.Remove(its[counter]);
+            }
+        }
+
+        public PDFConfig(List<ItemRef> items)
+        {
+            extractMainQuestion(items);
+            ExtractSubQuestions(items);
+            inputs = items;
+        }
+
+
+        public List<POCO.ItemRef>  Inputs
         {
             get { return inputs; }
         }
@@ -47,6 +69,7 @@ namespace CD.ABM.Logic.PDF
         {
 
         }
+        Random rand = new Random(100);
         public PDFConfig (String xml)
         {
             if (xml=="1")
@@ -64,19 +87,10 @@ namespace CD.ABM.Logic.PDF
             "Applies expertise to generate superior and sustainable results for client; is committed to making change happen",
             "Effectively transfers capabilities to client teams"};
             }
+            inputs.Add(new ItemRef(InputTypes.TextBox, "Comments", "", rand.Next().ToString())); 
             /*
              * 
             */
-            inputs = new List<POCO.Input>()
-            {
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_1", "Val1"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_2", "Val2"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_3", "Val3"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_4", "Val4"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_5", "Val5"),
-                new POCO.Input(POCO.InputTypes.RadioButton, "RAD1_6", "Val6")
-
-            };
             if (xml =="2")
             {
                 mainQuestion = "Insight and Intellectual Leadership in Area of Expertise";

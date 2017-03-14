@@ -60,7 +60,6 @@ namespace CD.ABM.Logic.PDF
         {
             PDFConfig config = new PDFConfig();
             DALC.FormsDAL formsDAL = new DALC.FormsDAL();
-
             return config;
         }
 
@@ -68,20 +67,20 @@ namespace CD.ABM.Logic.PDF
         {
             pdfConfig = new List<PDFConfig>();
 
-            if (1 == 1)
+            //Load the objects from .Net class
+            if (1 == 0)
             {
-                //Old Code 
                 pdfConfig.Add(new PDFConfig("1"));
-               // pdfConfig.Add(new PDFConfig("2"));
+                pdfConfig.Add(new PDFConfig("2"));
             }
 
+            //Load the objects from DB
             if (1 == 1)
             {
-
                 DALC.FormsDAL formsDAL = new DALC.FormsDAL();
                 foreach (String blockid in formsDAL.GetBlocks(formId))
                 {
-                    List<BlockItem> items = formsDAL.getItems(formId, blockid);
+                    List<ItemRef> items = formsDAL.getItems(formId, blockid);
                     pdfConfig.Add(new PDFConfig(items));
                 }
             }
@@ -97,6 +96,7 @@ namespace CD.ABM.Logic.PDF
             }
             Close();
             GetReader();
+            //Call the functions parked 
             foreach (Action action in drawingFuncs)
             {
                 action.Invoke();
@@ -191,11 +191,11 @@ namespace CD.ABM.Logic.PDF
             return ctext.YLine;
         }
 
-        public void AddTextField(POCO.Input input, Rectangle rect)
+        public void AddTextField(ItemRef input, Rectangle rect)
         {
            drawingFuncs.Add(() =>
            {
-               TextField tf = new TextField(Writer, rect, input.IDRef + rand.Next().ToString())
+               TextField tf = new TextField(Writer, rect, input.UniqueId)
                {
                    Alignment = Element.ALIGN_LEFT | Element.ALIGN_TOP,
                    BorderColor = BaseColor.BLACK,
@@ -204,9 +204,7 @@ namespace CD.ABM.Logic.PDF
                };
                stamper.AddAnnotation(tf.GetTextField(), 1);
            });
-            return;
         }
-
 
         public float AddRadioGroup(String Id, Rectangle rectStart, List<String> labels, int distance) 
         {
@@ -229,11 +227,10 @@ namespace CD.ABM.Logic.PDF
                 }
                 stamper.AddAnnotation(group, 1);
             });
-
             return curY;
         }
 
-        public void AddRadio(List<POCO.Input > inputs )
+/*        public void AddRadio(List<POCO.Input > inputs )
         {
             drawingFuncs.Add(() =>
             {
@@ -246,7 +243,6 @@ namespace CD.ABM.Logic.PDF
                 {
                     tf = new RadioCheckField(Writer, input.Rect, groupname + "_chk" + i.ToString(),i.ToString());
                     tf.BackgroundColor = new GrayColor(0.8f);
-
                     tf.BorderColor = GrayColor.BLACK;
                     tf.CheckType = RadioCheckField.TYPE_CIRCLE;
                     tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
@@ -256,7 +252,7 @@ namespace CD.ABM.Logic.PDF
                 stamper.AddAnnotation(group, 1);
             });
         }
-
+*/
         public float AddText(Rectangle rec, String text)
         {
             return AddText(rec, text, BaseColor.BLACK);

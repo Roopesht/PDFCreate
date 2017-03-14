@@ -47,7 +47,6 @@
     <Compile Include="Blocks\FirstPage.cs" />
     <Compile Include="Blocks\BlockR1GrpRText.cs" />
     <Compile Include="Blocks\IBlock.cs" />
-    <Compile Include="DALC\FormsDALOld.cs" />
     <Compile Include="DALC\FormsDAL.cs" />
     <Compile Include="Drawing\DrawingArea.cs" />
     <Compile Include="Drawing\Helpers.cs" />
@@ -55,7 +54,8 @@
     <Compile Include="PDF\PDFPageSize.cs" />
     <Compile Include="PDF\PDFFont.cs" />
     <Compile Include="PDF\PDFDoc.cs" />
-    <Compile Include="POCO\BlockItem.cs" />
+    <Compile Include="POCO\InputTypes.cs" />
+    <Compile Include="POCO\ItemRef.cs" />
     <Compile Include="POCO\Input.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCreatePDF.cs" />

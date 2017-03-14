@@ -12,30 +12,34 @@ namespace CD.ABM.Logic
         PdfContentByte cb = null;
         private String filename=@"D:\a1.pdf";
         private PdfReader reader;
-        private string filenameBlank=@"D:\a.pdf";
+        private string filenameBlank;
         private PdfStamper stamper;
 
 
         public TestCreatePDF()
         {
+            filenameBlank = filename.Replace(".", "_Blank.");
+
             FileStream fs = new System.IO.FileStream(filenameBlank, System.IO.FileMode.Create);
             writer = PdfWriter.GetInstance(doc, fs);
             doc.Open();
             cb = writer.DirectContent;
-            Rectangle rect = new Rectangle(50, 700, 300, 600);
-            rect.BorderWidth = .25f;
-            rect.Border = 255;
+            Rectangle rect = new Rectangle(50, 700, 300, 600)
+            {
+                BorderWidth = .25f,
+                Border = 255
+            };
             cb.Rectangle(rect);
             cb.Stroke();
 
-
+            
             //Add text
             Font font3 = new Font(FontFactory.GetFont(FontFactory.HELVETICA, 1000, Font.NORMAL, BaseColor.BLACK));
             Chunk chunk = new Chunk("Roopesh", new Font(FontFactory.GetFont(FontFactory.HELVETICA, 10, Font.NORMAL, BaseColor.BLUE)));
             Phrase phrase = new Phrase(chunk);
 
             ColumnText ctext = new ColumnText(cb);
-            ctext.SetSimpleColumn(rect.Left+5, rect.Top, rect.Right, rect.Bottom);
+            ctext.SetSimpleColumn(rect.Left + 5, rect.Top, rect.Right, rect.Bottom);
             ctext.SetText(phrase);
             ctext.Go();
 
@@ -44,49 +48,47 @@ namespace CD.ABM.Logic
             GetReader();
 
             //Add TextBox
-            rect = new Rectangle(rect.Left, rect.Top - 100, rect.Right, rect.Bottom-100);
-            TextField tf = new TextField(writer, rect, "text1");
-            tf.Alignment = Element.ALIGN_LEFT | Element.ALIGN_TOP;
-            tf.BorderColor = BaseColor.BLACK;
-            tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
-            tf.Text = "TextField";
+            rect = new Rectangle(rect.Left, rect.Top - 100, rect.Right, rect.Bottom - 100);
+            TextField tf = new TextField(writer, rect, "text1")
+            {
+                Alignment = Element.ALIGN_LEFT | Element.ALIGN_TOP,
+                BorderColor = BaseColor.BLACK,
+                BorderStyle = PdfBorderDictionary.STYLE_SOLID,
+                Text = "TextField"
+            };
             stamper.AddAnnotation(tf.GetTextField(), 1);
 
             //Add Radio
             rect = new Rectangle(rect.Left, rect.Top - 100, rect.Right, rect.Bottom - 25);
             PdfFormField group = PdfFormField.CreateRadioButton(writer, true);
-
             group.FieldName = "grp1";
-            RadioCheckField radioField = null;
-            for (int i =0;i<5;i++)
+            for (int i = 0; i < 5; i++)
             {
                 Rectangle radioRect = new Rectangle(rect.Left + i * 25, rect.Top, rect.Left + (i + 1) * 25, rect.Bottom);
-                radioField = new RadioCheckField(writer, radioRect, "chk"+i.ToString(), i.ToString());
-                //radioField.BackgroundColor = new GrayColor(0.8f);
-                radioField.BorderColor = GrayColor.BLACK;
-                radioField.CheckType = RadioCheckField.TYPE_CIRCLE;
-                //radioField.BorderWidth = 1;
-                radioField.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
+                RadioCheckField radioField = new RadioCheckField(writer, radioRect, "chk" + i.ToString(), i.ToString())
+                {
+                    BorderColor = GrayColor.BLACK,
+                    CheckType = RadioCheckField.TYPE_CIRCLE,
+                    BorderStyle = PdfBorderDictionary.STYLE_SOLID
+                };
                 group.AddKid(radioField.RadioField);
-
-                
             }
             //group.SetAdditionalActions(PdfName.E, PdfAction.JavaScript("app.alert(validate);",writer));
             stamper.AddAnnotation(group, 1);
 
-
             //Add submit button
             rect = new Rectangle(rect.Left, rect.Top - 100, rect.Right, rect.Bottom - 25);
-            PushbuttonField button = new PushbuttonField(writer, rect, "postSubmit");
-            button.FontSize =20;
-            button.BackgroundColor = BaseColor.LIGHT_GRAY;
-            button.BorderColor = GrayColor.BLACK;
-            button.BorderWidth = 1f;
-            button.BorderStyle = PdfBorderDictionary.STYLE_BEVELED;
-            button.TextColor = GrayColor.GREEN;
-            button.FontSize = 8f;
-            button.Text = "Submit";
-            button.Visibility = PushbuttonField.VISIBLE_BUT_DOES_NOT_PRINT;
+            PushbuttonField button = new PushbuttonField(writer, rect, "postSubmit")
+            {
+                FontSize = 8,
+                BackgroundColor = BaseColor.LIGHT_GRAY,
+                BorderColor = GrayColor.BLACK,
+                BorderWidth = 1f,
+                BorderStyle = PdfBorderDictionary.STYLE_BEVELED,
+                TextColor = GrayColor.GREEN,
+                Text = "Submit",
+                Visibility = PushbuttonField.VISIBLE_BUT_DOES_NOT_PRINT
+            };
             PdfFormField field = button.Field;  
             field.Put(PdfName.TU, new PdfString("Save changes and return to the folder."));
             String javascript = "validate();";
@@ -119,6 +121,4 @@ namespace CD.ABM.Logic
             writer = stamper.Writer;
         }
     }
-
-
 }
