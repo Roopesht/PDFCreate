@@ -75,7 +75,7 @@ namespace CD.ABM.Logic
 
                 
             }
-            group.SetAdditionalActions(PdfName.E, PdfAction.JavaScript("app.alert(validate);",writer));
+            //group.SetAdditionalActions(PdfName.E, PdfAction.JavaScript("app.alert(validate);",writer));
             stamper.AddAnnotation(group, 1);
 
 

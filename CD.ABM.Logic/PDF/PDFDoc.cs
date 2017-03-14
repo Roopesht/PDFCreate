@@ -90,7 +90,6 @@ namespace CD.ABM.Logic.PDF
         public void ConstructPDF()
         {
             float curY = PageSize.Height;
-            //Read the config and
             foreach(PDFConfig config in pdfConfig)
             {
                 Blocks.BlockR1GrpRText block = new Blocks.BlockR1GrpRText(this, config);
@@ -98,19 +97,11 @@ namespace CD.ABM.Logic.PDF
             }
             Close();
             GetReader();
-
             foreach (Action action in drawingFuncs)
             {
                 action.Invoke();
             }
-
-            //block = new Blocks.BlockR1GrpRText(this, new PDFConfig("2"));
-            //block.Draw(curY-20);
-
-
-            //TODO: Loop through PDFConfig List, and instantiate the BlockR1GrpRText
-            //TODO: Execute the instantiated blocks in sequence
-            //TODO: Based on the page number, either pass the Current Y position
+            Close();
         }
 
         public PDFPageSize PageSize
@@ -134,35 +125,37 @@ namespace CD.ABM.Logic.PDF
             doc.AddCreator("CD ABM Logic");
         }
 
-        public Rectangle AddRectange(Rectangle rect, BaseColor color)
+        public Rectangle AddRectange(Rectangle rect)
         {
-            rect.Border = PdfBorderDictionary.STYLE_SOLID;
-            rect.BorderWidth = .25f;
-            rect.Border = 255;
-            if (color != null) rect.BackgroundColor = color;
-            rect.BorderColor = BaseColor.BLACK;
             cb.Rectangle(rect);
             cb.Stroke();
             return rect;
         }
         public Rectangle AddRectange(float lx, float ly, float ux, float uy, BaseColor color)
         {
-            Rectangle rect = new Rectangle(lx, ly, ux, uy);
-            return AddRectange(rect, color);
+            Rectangle rect = new Rectangle(lx, ly, ux, uy)
+            {
+                Border = PdfBorderDictionary.STYLE_SOLID,
+                BorderWidth = .25f,
+                BorderColor = BaseColor.BLACK,
+                BackgroundColor = color
+            };
+            return AddRectange(rect);
         }
 
         public Rectangle AddRectangeWithText(float lx, float ly, float ux, float uy, BaseColor color, String text, BaseColor textColor)
         {
-            Rectangle rect = new Rectangle(lx, ly, ux, uy);
-            return AddRectange(rect, color);
+            return AddRectange(lx, ly, ux, uy, color);
         }
 
         public void AddParagraph(Document doc, int alignment, iTextSharp.text.Font font, iTextSharp.text.IElement content)
         {
-            Paragraph paragraph = new Paragraph();
+            Paragraph paragraph = new Paragraph()
+            {
+                Alignment = alignment,
+                Font = font
+            };
             paragraph.SetLeading(0f, 1.2f);
-            paragraph.Alignment = alignment;
-            paragraph.Font = font;
             paragraph.Add(content);
             doc.Add(paragraph);
         }
@@ -183,17 +176,17 @@ namespace CD.ABM.Logic.PDF
         {
             Rectangle rect = new Rectangle(rec.Left + 5, rec.Bottom, rec.Right, rec.Top);
 
-            Font font3 = new Font(FontFactory.GetFont(FontFactory.HELVETICA, 1000, Font.NORMAL, color));
-            Chunk chunk = new Chunk(text, new Font(FontFactory.GetFont(FontFactory.HELVETICA, 10, Font.NORMAL, color)));
+            Chunk chunk = new Chunk(text, PDFFont.GetNormalFont(color));
             Phrase phrase = new Phrase(chunk);
 
-            ColumnText ctext = new ColumnText(cb);
+            ColumnText ctext = new ColumnText(cb)
+            {
+                Alignment = Element.ALIGN_BOTTOM | Element.ALIGN_LEFT,
+                ExtraParagraphSpace = 10
+            };
             ctext.SetSimpleColumn(rect.GetLeft(0), 0, rect.GetRight(0), rect.GetTop(0));
             ctext.SetText(phrase);
             ctext.SetLeading(BasicPDFBlock.gap, 0f);
-            //ctext.Alignment = Element.ALIGN_BOTTOM | Element.ALIGN_LEFT;
-            ctext.ExtraParagraphSpace = 10;
-            
             ctext.Go();
             return ctext.YLine;
         }
@@ -202,11 +195,13 @@ namespace CD.ABM.Logic.PDF
         {
            drawingFuncs.Add(() =>
            {
-               TextField tf = new TextField(Writer, rect, input.IDRef + rand.Next().ToString());
-               tf.Alignment = Element.ALIGN_LEFT | Element.ALIGN_TOP;
-               tf.BorderColor = BaseColor.BLACK;
-               tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
-               tf.Text = input.DefaultValue;
+               TextField tf = new TextField(Writer, rect, input.IDRef + rand.Next().ToString())
+               {
+                   Alignment = Element.ALIGN_LEFT | Element.ALIGN_TOP,
+                   BorderColor = BaseColor.BLACK,
+                   BorderStyle = PdfBorderDictionary.STYLE_SOLID,
+                   Text = input.DefaultValue
+               };
                stamper.AddAnnotation(tf.GetTextField(), 1);
            });
             return;
@@ -218,22 +213,19 @@ namespace CD.ABM.Logic.PDF
             float curY = rectStart.Top;
             drawingFuncs.Add(() =>
             {
-
                 PdfFormField group = PdfFormField.CreateRadioButton(writer, true);
-                String groupname = "grp" + rand.Next().ToString();
-                group.FieldName = groupname;
-                RadioCheckField tf = null;
-                int i = 0;
-                foreach (String s in labels)
+                group.FieldName = Id;
+                for (int i=0; i<labels.Count; i++)
                 {
-                    tf = new RadioCheckField(Writer, rectStart, groupname + "_chk" + i.ToString(), i.ToString());
-                    tf.BackgroundColor = new GrayColor(0.8f);
-
-                    tf.BorderColor = GrayColor.BLACK;
-                    tf.CheckType = RadioCheckField.TYPE_CIRCLE;
-                    tf.BorderStyle = PdfBorderDictionary.STYLE_SOLID;
+                    Rectangle rect = new Rectangle(rectStart.Left + i * distance, rectStart.Top, rectStart.Right + i * 25, rectStart.Bottom);
+                    RadioCheckField tf = new RadioCheckField(Writer, rect, Id + "_chk" + i.ToString(), i.ToString())
+                    {
+                        BackgroundColor = new GrayColor(0.8f),
+                        BorderColor = GrayColor.BLACK,
+                        CheckType = RadioCheckField.TYPE_CIRCLE,
+                        BorderStyle = PdfBorderDictionary.STYLE_SOLID
+                    };
                     group.AddKid(tf.RadioField);
-                    i++;
                 }
                 stamper.AddAnnotation(group, 1);
             });

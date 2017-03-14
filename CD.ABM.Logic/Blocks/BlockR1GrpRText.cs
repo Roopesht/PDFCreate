@@ -37,9 +37,11 @@ namespace CD.ABM.Logic.Blocks
             //Input input = (Input)config.Inputs.Select(item => item.Identifer == "overall");
             //if (input != null)
             {
-                rect = new Rectangle(rect.Left, curY - 25, 300, curY - 10);
-                doc.AddRectange(rect, BaseColor.GREEN);
+                rect = doc.AddRectange(rect.Left, curY - 25, 300, curY - 10,BaseColor.GREEN); 
+                Rectangle rRect = new Rectangle(255, rect.Top, rect.Left + 15, rect.Bottom);
+                
                 curY = doc.AddText(rect, "Overall", BaseColor.WHITE);
+                doc.AddRadioGroup("grp" + rect.Top.ToString(), rRect, new List<String> { "NA", "1", "2", "3", "4", "5" },25 );
                 //curY = doc.AddRadioGroup(input.IDRef, );
             }
 
@@ -63,7 +65,7 @@ namespace CD.ABM.Logic.Blocks
             curX += 25;
             curY = doc.AddText(rect.OffSetRectByXAxis(curX), "5", BaseColor.WHITE);
             radios.Add(config.Inputs[5].AddRectangle(radioRect.OffSetRectByXAxis(curX + 15)));
-            doc.AddRadio(radios);
+            //doc.AddRadio(radios);
             Rectangle bigTextRect = new Rectangle(300, _curY - 15, doc.PageSize.Width - 10, curY+5);
             Input input = new Input(InputTypes.TextBox, "bigtext", "text",bigTextRect);
             doc.AddTextField(input, bigTextRect);

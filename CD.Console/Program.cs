@@ -18,7 +18,6 @@ namespace CD.Console
             string filename = @"D:\abc.pdf";
             PDFDoc doc = new PDFDoc(filename, "Expert");
             doc.ConstructPDF();
-            doc.Close();
             SystemUtil.OpenFile(filename);
         }
     }

@@ -34,8 +34,8 @@ namespace CD.ABM.Logic.Blocks
             rect = new Rectangle(rect.Left, curY -15, 300, curY);
             curY = doc.AddText(rect.OffSetRectByYAxis( 15), config.SubQuestions, BaseColor.LIGHT_GRAY);
 
-            rect = new Rectangle(rect.Left, curY - 25, 300, curY - 10);
-            doc.AddRectange(rect, BaseColor.GREEN);
+            rect = doc.AddRectange(rect.Left, curY - 25, 300, curY - 10, BaseColor.GREEN);
+            doc.AddRectange(rect);
             curY = doc.AddText(rect, "Overall", BaseColor.WHITE);
 
             curY = doc.AddText(rect.OffSetRectByXAxis(100), "NA", BaseColor.WHITE);
