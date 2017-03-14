@@ -7,7 +7,7 @@ namespace CD.ABM.Logic.DALC
 {
     class FormsDAL
     {
-        String connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\\CDDB.accdb";
+        String connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=..\\..\\..\\CD.DB\\CDDB.accdb";
         OleDbConnection conn = null;
         public FormsDAL ()
         {
