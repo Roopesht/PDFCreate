@@ -221,21 +221,23 @@ namespace CD.ABM.Logic.PDF
                    BorderStyle = PdfBorderDictionary.STYLE_SOLID,
                    Text = input.DefaultValue
                };
-               stamper.AddAnnotation(tf.GetTextField(), 1);
+               PdfFormField pf = tf.GetTextField();
+               if (input.IsMandatory) pf.SetFieldFlags(PdfFormField.FF_REQUIRED);
+               stamper.AddAnnotation(pf, 1);
            });
         }
 
-        public float AddRadioGroup(String Id, Rectangle rectStart, List<String> labels, int distance) 
+        public float AddRadioGroup(ItemRef item, Rectangle rectStart, List<String> labels, int distance) 
         {
             float curY = rectStart.Top;
             drawingFuncs.Add(() =>
             {
                 PdfFormField group = PdfFormField.CreateRadioButton(writer, true);
-                group.FieldName = Id;
+                group.FieldName = item.UniqueId;
                 for (int i=0; i<labels.Count; i++)
                 {
-                    Rectangle rect = new Rectangle(rectStart.Left + i * distance, rectStart.Top, rectStart.Right + i * 25, rectStart.Bottom);
-                    RadioCheckField tf = new RadioCheckField(Writer, rect, Id + "_chk" + i.ToString(), i.ToString())
+                    Rectangle rect = new Rectangle(rectStart.Left + i * distance, rectStart.Top, rectStart.Right+ i * distance, rectStart.Bottom);
+                    RadioCheckField tf = new RadioCheckField(Writer, rect, item.UniqueId + "_" + i.ToString(), i.ToString())
                     {
                         BackgroundColor = new GrayColor(0.8f),
                         BorderColor = GrayColor.BLACK,
@@ -244,6 +246,7 @@ namespace CD.ABM.Logic.PDF
                     };
                     group.AddKid(tf.RadioField);
                 }
+                if (item.IsMandatory) group.SetFieldFlags(PdfFormField.FF_REQUIRED);
                 stamper.AddAnnotation(group, 1);
             });
             return curY;

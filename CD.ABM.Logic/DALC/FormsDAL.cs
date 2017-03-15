@@ -51,7 +51,10 @@ namespace CD.ABM.Logic.DALC
                     inputType: reader["inputtype"].ToString(),
                     question: reader["question"].ToString(),
                     uniqueId: reader["QUESTION_CODE"].ToString()
-                );
+                )
+                {
+                    IsMandatory = (bool)reader["IS_MANDATORY_YN"]
+                };
                 items.Add(item);
             }
 

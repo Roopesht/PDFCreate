@@ -36,7 +36,7 @@ namespace CD.ABM.Logic.POCO
 
         public String Question { get; set; }
 
-        public int IsMandatory { get; set; }
+        public bool IsMandatory { get; set; }
 
         public String DefaultValue { get; set; }
 

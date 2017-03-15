@@ -30,11 +30,10 @@ namespace CD.ABM.Logic.Blocks
             rect = new Rectangle(rect.Left, curY -15, 300, curY);
             curY = doc.AddText(rect.OffSetRectByYAxis( 15), config.SubQuestions, PDFColor.BCGBlack);
 
-            //Input input = (Input)config.Inputs.Select(item => item.Identifer == "overall");
             if (config.OverAll != null)
             {
                 rect = doc.AddRectange(rect.Left, curY - 25, 300, curY - 10,PDFColor.BCGGreen); 
-                Rectangle rRect = new Rectangle(255, rect.Top, rect.Left + 15, rect.Bottom);
+                Rectangle rRect = new Rectangle(125, rect.Top, 125+25, rect.Bottom);
                 
                 curY = doc.AddText(rect, "Overall", BaseColor.WHITE);
                 curY = doc.AddText(rect.OffSetRectByXAxis(curX), "NA", BaseColor.WHITE);
@@ -44,7 +43,7 @@ namespace CD.ABM.Logic.Blocks
                 curY = doc.AddText(rect.OffSetRectByXAxis(curX += 25), "4", BaseColor.WHITE);
                 curY = doc.AddText(rect.OffSetRectByXAxis(curX += 25), "5", BaseColor.WHITE);
 
-                doc.AddRadioGroup(config.OverAll.UniqueId, rRect, new List<String> { "NA", "1", "2", "3", "4", "5" }, 25);
+                doc.AddRadioGroup(config.OverAll, rRect, new List<String> { "NA", "1", "2", "3", "4", "5" }, 25);
             }
 
             if (config.Comments != null)
