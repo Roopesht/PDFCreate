@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Blocks\BasicPDFBlock.cs" />
+    <Compile Include="Blocks\BlockR1GrpRTextSubQ.cs" />
     <Compile Include="Blocks\FirstPage.cs" />
     <Compile Include="Blocks\BlockR1GrpRText.cs" />
     <Compile Include="Blocks\IBlock.cs" />
