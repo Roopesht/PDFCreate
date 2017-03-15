@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <AllTemplates>
+    <config>
+    <font>
+      <size>10</size>
+      <color>Black</color>
+    </font>
+    </config>
+    <Blocks>
+      <Block name="abc">
+        <Config>
+
+        </Config>
+      </Block>
+    </Blocks>
+    <Templates>
+      <Template1>
+        <config>
+          <size>5</size>
+        </config>
+      </Template1>
+    </Templates>
+  </AllTemplates>
+  
+</root>

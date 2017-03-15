@@ -90,14 +90,15 @@ namespace CD.ABM.Logic.PDF
         public void ConstructPDF()
         {
             float curY = PageSize.Height-pageSize.TopMargin;
+            //Create the list of all the blocks configured in DB
             foreach(PDFConfig config in pdfConfig)
             {
                 Blocks.BlockR1GrpRText block = new Blocks.BlockR1GrpRText(this, config);
                 curY = block.Draw(curY) - 10;
             }
 
-            Close();
-            GetReader();
+            Close(); //Close the document
+            GetReader(); //Reopen the PDF document for rendering the form fields (Text boxes and radio buttons)
             //Call the functions parked 
             AddSubmitButton();
             foreach (Action action in drawingFuncs)
@@ -107,7 +108,6 @@ namespace CD.ABM.Logic.PDF
 
             JavaScript.addValidateFunction(writer);
             JavaScript.addRequiredFields(writer, getListofAllItems());
-
 
             Close();
         }
@@ -212,6 +212,7 @@ namespace CD.ABM.Logic.PDF
 
         public void AddTextField(ItemRef input, Rectangle rect)
         {
+            int fieldFlags = TextField.MULTILINE;
            drawingFuncs.Add(() =>
            {
                TextField tf = new TextField(Writer, rect, input.UniqueId)
@@ -222,13 +223,18 @@ namespace CD.ABM.Logic.PDF
                    Text = input.DefaultValue
                };
                PdfFormField pf = tf.GetTextField();
-               if (input.IsMandatory) pf.SetFieldFlags(PdfFormField.FF_REQUIRED);
+
+               if (input.IsMandatory) fieldFlags = fieldFlags | PdfFormField.FF_REQUIRED;
+               pf.SetFieldFlags(fieldFlags);
                stamper.AddAnnotation(pf, 1);
+
            });
         }
 
         public float AddRadioGroup(ItemRef item, Rectangle rectStart, List<String> labels, int distance) 
         {
+            int fieldFlags = 0;
+
             float curY = rectStart.Top;
             drawingFuncs.Add(() =>
             {
@@ -242,11 +248,13 @@ namespace CD.ABM.Logic.PDF
                         BackgroundColor = new GrayColor(0.8f),
                         BorderColor = GrayColor.BLACK,
                         CheckType = RadioCheckField.TYPE_CIRCLE,
-                        BorderStyle = PdfBorderDictionary.STYLE_SOLID
+                        BorderStyle = PdfBorderDictionary.STYLE_SOLID,
+                        FontSize = 12
                     };
                     group.AddKid(tf.RadioField);
                 }
-                if (item.IsMandatory) group.SetFieldFlags(PdfFormField.FF_REQUIRED);
+                if (item.IsMandatory) fieldFlags = fieldFlags | PdfFormField.FF_REQUIRED;
+                group.SetFieldFlags(fieldFlags);
                 stamper.AddAnnotation(group, 1);
             });
             return curY;

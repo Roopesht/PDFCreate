@@ -33,8 +33,6 @@ namespace CD.ABM.Logic.PDF
             }
             writer.AddJavaScript("reqFields = [" + fieldString + "];");
             Console.WriteLine("reqFields = [" + fieldString + "];");
-            
-
         }
     }
 }

@@ -63,6 +63,7 @@
     <Compile Include="TestCreatePDF.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config\UIConfig.xml" />
     <Content Include="FormsConfig.xml" />
   </ItemGroup>
   <ItemGroup>
