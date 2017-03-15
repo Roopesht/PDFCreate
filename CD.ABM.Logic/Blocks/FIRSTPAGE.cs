@@ -22,13 +22,13 @@ namespace CD.ABM.Logic.Blocks
         {
             float start = curY;
 
-            Rectangle rect = Doc.AddRectange(10, curY - 15, doc.PageSize.Width - 10, curY, BaseColor.GREEN);
+            Rectangle rect = Doc.AddRectange(10, curY - 15, doc.PageSize.Width - 10, curY, PDFColor.BCGGreen);
             curY = Doc.AddText(rect, config.MainQuestion, BaseColor.WHITE) + 10;
 
             rect = new Rectangle(rect.Left, curY -15, 300, curY);
-            curY = doc.AddText(rect.OffSetRectByYAxis( 15), config.SubQuestions, BaseColor.LIGHT_GRAY);
+            curY = doc.AddText(rect.OffSetRectByYAxis( 15), config.SubQuestions, BaseColor.BLACK);
 
-            rect = doc.AddRectange(rect.Left, curY - 25, 300, curY - 10, BaseColor.GREEN);
+            rect = doc.AddRectange(rect.Left, curY - 25, 300, curY - 10, PDFColor.BCGGreen);
             doc.AddRectange(rect);
             curY = doc.AddText(rect, "Overall", BaseColor.WHITE);
 

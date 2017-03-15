@@ -24,16 +24,16 @@ namespace CD.ABM.Logic.Blocks
         public override float Draw(float _curY)
         {
             float curY= _curY, curX=100;
-            Rectangle rect = Doc.AddRectange(10, curY - 15, doc.PageSize.Width - 10, curY, BaseColor.GREEN);
+            Rectangle rect = Doc.AddRectange(10, curY - 15, doc.PageSize.Width - 10, curY, PDFColor.BCGGreen);
             curY = Doc.AddText(rect, config.MainQuestion, BaseColor.WHITE) + 10;
 
             rect = new Rectangle(rect.Left, curY -15, 300, curY);
-            curY = doc.AddText(rect.OffSetRectByYAxis( 15), config.SubQuestions, BaseColor.LIGHT_GRAY);
+            curY = doc.AddText(rect.OffSetRectByYAxis( 15), config.SubQuestions, PDFColor.BCGBlack);
 
             //Input input = (Input)config.Inputs.Select(item => item.Identifer == "overall");
             if (config.OverAll != null)
             {
-                rect = doc.AddRectange(rect.Left, curY - 25, 300, curY - 10,BaseColor.GREEN); 
+                rect = doc.AddRectange(rect.Left, curY - 25, 300, curY - 10,PDFColor.BCGGreen); 
                 Rectangle rRect = new Rectangle(255, rect.Top, rect.Left + 15, rect.Bottom);
                 
                 curY = doc.AddText(rect, "Overall", BaseColor.WHITE);

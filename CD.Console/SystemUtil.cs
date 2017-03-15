@@ -18,7 +18,6 @@ namespace CD.Console
             proc.StartInfo.FileName = cmd;
             proc.StartInfo.CreateNoWindow = false;
             proc.Start();
-            //proc.WaitForExit();
         }
     }
 }
