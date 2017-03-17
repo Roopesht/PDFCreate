@@ -5,6 +5,7 @@ namespace CD.ABM.Logic.Blocks
 
     abstract class BasicPDFBlock : IBlock
     {
+        protected UIConfig uiConfig = null;
         protected PDFDoc doc = null;
         protected PDFConfig config = null;
         static public int gap = 10;

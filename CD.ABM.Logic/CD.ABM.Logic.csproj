@@ -48,6 +48,7 @@
     <Compile Include="Blocks\FirstPage.cs" />
     <Compile Include="Blocks\BlockR1GrpRText.cs" />
     <Compile Include="Blocks\IBlock.cs" />
+    <Compile Include="Blocks\UIConfig.cs" />
     <Compile Include="DALC\FormsDAL.cs" />
     <Compile Include="Drawing\DrawingArea.cs" />
     <Compile Include="Drawing\Helpers.cs" />

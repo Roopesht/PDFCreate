@@ -1,26 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <AllTemplates>
+  <Templates>
     <config>
-    <font>
-      <size>10</size>
-      <color>Black</color>
-    </font>
+      <font>
+        <size>10</size>
+        <color>Black</color>
+      </font>
     </config>
-    <Blocks>
-      <Block name="abc">
-        <Config>
-
-        </Config>
-      </Block>
-    </Blocks>
-    <Templates>
-      <Template1>
+    <Template name="first">
+      <config>
+        <size>10</size>
+        <color>Black</color>
+      </config>
+      <Block name="block1">
         <config>
-          <size>5</size>
+          <size>10</size>
+          <color>Black</color>
         </config>
-      </Template1>
-    </Templates>
-  </AllTemplates>
-  
+      </Block>
+    </Template>
+
+  </Templates>
+  <Blocks>
+    <Block name="abc">
+      <config>
+        <size>10</size>
+        <color>Black</color>
+      </config>
+    </Block>
+  </Blocks>
 </root>
