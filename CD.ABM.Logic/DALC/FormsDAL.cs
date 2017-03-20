@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using CD.ABM.Logic.POCO;
 using System.Data.OleDb;
+using System.Configuration;
 
 namespace CD.ABM.Logic.DALC
 {
     class FormsDAL
     {
-        String connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=..\\..\\..\\CD.DB\\CDDB.accdb";
+        String connString = ConfigurationManager.ConnectionStrings["FormsConn"].ToString();
         OleDbConnection conn = null;
         public FormsDAL ()
         {
