@@ -16,7 +16,7 @@ namespace CD.Console
         private static void CreatePDF()
         {
             string filename = @"D:\abc.pdf";
-            PDFDoc doc = new PDFDoc(filename, "Expert");
+            PDFDoc doc = new PDFDoc(filename, "105");
             doc.ConstructPDF();
             SystemUtil.OpenFile(filename);
         }

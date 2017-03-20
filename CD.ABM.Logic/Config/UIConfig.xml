@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
+  <Blocks>
+    <Block name="abc">
+      <config>
+        <size>10</size>
+        <color>Black</color>
+      </config>
+    </Block>
+  </Blocks>
+
   <Templates>
     <config>
       <font>
@@ -21,12 +30,4 @@
     </Template>
 
   </Templates>
-  <Blocks>
-    <Block name="abc">
-      <config>
-        <size>10</size>
-        <color>Black</color>
-      </config>
-    </Block>
-  </Blocks>
 </root>

@@ -94,6 +94,8 @@ namespace CD.ABM.Logic.PDF
             foreach(PDFConfig config in pdfConfig)
             {
                 Blocks.BlockR1GrpRText block = new Blocks.BlockR1GrpRText(this, config);
+                //block.uiconfig = getPDFUIConfig (formname, blockname, blockinstance name);
+                //block.uiconfig = getPDFUIConfig ("105", "BlockR1GrpRText", "Insight");
                 curY = block.Draw(curY) - 10;
             }
 
