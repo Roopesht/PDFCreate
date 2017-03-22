@@ -6,11 +6,15 @@ namespace CD.Console
     {
         static void Main(string[] args)
         {
-
-            //TestCreatePDF pdf = new TestCreatePDF();
-            //SystemUtil.OpenFile(@"D:\a1.pdf");
-            CreatePDF();
+            TestCreate();
+            //CreatePDF();
             
+        }
+        private static void TestCreate ()
+        {
+            string filename = @"D:\a1.pdf";
+            TestCreatePDF pdf = new TestCreatePDF(filename);
+            SystemUtil.OpenFile(filename);
         }
 
         private static void CreatePDF()

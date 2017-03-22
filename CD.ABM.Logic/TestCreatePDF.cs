@@ -1,4 +1,6 @@
 ﻿using iTextSharp.text;
+using iTextSharp.text.html;
+using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using System;
 using System.IO;
@@ -10,14 +12,15 @@ namespace CD.ABM.Logic
         iTextSharp.text.Document doc = new Document();
         private PdfWriter writer;
         PdfContentByte cb = null;
-        private String filename=@"D:\a1.pdf";
+        private String filename;
         private PdfReader reader;
         private string filenameBlank;
         private PdfStamper stamper;
 
 
-        public TestCreatePDF()
+        public TestCreatePDF(String _filename)
         {
+            filename = _filename;
             filenameBlank = filename.Replace(".", "_Blank.");
 
             FileStream fs = new System.IO.FileStream(filenameBlank, System.IO.FileMode.Create);
@@ -43,8 +46,18 @@ namespace CD.ABM.Logic
             ctext.SetText(phrase);
             ctext.Go();
 
+            //Add HTML
+            rect = new Rectangle(rect.Left, rect.Top - 100, rect.Right, rect.Bottom - 100);
+            ColumnText ct1 = new ColumnText(cb);
+            ct1.SetSimpleColumn(rect.Left, rect.Top, rect.Right, rect.Bottom);
+            String html = "<p> <font color='red'>Hello red</font><p>" + 
+                "<table border='0'><tr><td><p>Hello <b>Bold Now I am <I> Italic</I>, or <u>underline</u></B></p>" +
+                "<ol><li>this is the first item </li><li>this is the second item</li><li>this is really very long text so that it will run for 2 lines for demo purpose, and prove that the rectangles wont get adjusted automatically</li></ol>" +
+                "</td></tr></table>";
+            AddHTMLContent (html, ct1);
+            ct1.Go();
+            
             this.doc.Close();
-
             GetReader();
 
             //Add TextBox
@@ -89,14 +102,13 @@ namespace CD.ABM.Logic
                 Text = "Submit",
                 Visibility = PushbuttonField.VISIBLE_BUT_DOES_NOT_PRINT
             };
-            PdfFormField field = button.Field;  
+            PdfFormField field = button.Field;
             String javascript = "validate();";
             field.Action = PdfAction.JavaScript(javascript, writer);
 
             //field.Action = PdfAction.CreateSubmitForm( @"rtayaloor@sapient.com", null, PdfAction.SUBMIT_HTML_FORMAT | PdfAction.SUBMIT_INCLUDE_NO_VALUE_FIELDS);
             stamper.AddAnnotation(field, 1);
             PdfAcroForm f = new PdfAcroForm(writer);
-
 
             //Add common Javascript code
             writer.AddJavaScript("var requiredFields = ['text1', 'grp1'];");
@@ -118,6 +130,14 @@ namespace CD.ABM.Logic
             reader = new PdfReader(filenameBlank);
             stamper = new PdfStamper(reader, new FileStream(filename, FileMode.Create));
             writer = stamper.Writer;
+        }
+
+        public void AddHTMLContent(String HTMLContent, ColumnText rect)
+
+        {
+            var parsedHtmlElements =  HTMLWorker.ParseToList(new StringReader(HTMLContent), new StyleSheet());
+            foreach (var htmlElement in parsedHtmlElements)
+                rect.AddElement(htmlElement as IElement);
         }
     }
 }

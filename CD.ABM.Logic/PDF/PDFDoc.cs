@@ -198,6 +198,7 @@ namespace CD.ABM.Logic.PDF
             Rectangle rect = new Rectangle(rec.Left + 5, rec.Bottom, rec.Right, rec.Top);
 
             Chunk chunk = new Chunk(text, PDFFont.GetNormalFont(color));
+            
             Phrase phrase = new Phrase(chunk);
 
             ColumnText ctext = new ColumnText(cb)
