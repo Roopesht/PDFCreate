@@ -1,5 +1,4 @@
 ﻿using iTextSharp.text;
-using iTextSharp.text.html;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using System;
@@ -7,7 +6,7 @@ using System.IO;
 
 namespace CD.ABM.Logic
 {
-    public class TestCreatePDF
+    public class TestCreatePDF : IDisposable
     {
         iTextSharp.text.Document doc = new Document();
         private PdfWriter writer;
@@ -138,6 +137,16 @@ namespace CD.ABM.Logic
             var parsedHtmlElements =  HTMLWorker.ParseToList(new StringReader(HTMLContent), new StyleSheet());
             foreach (var htmlElement in parsedHtmlElements)
                 rect.AddElement(htmlElement as IElement);
+        }
+        protected virtual void Dispose(bool flag)
+        {
+            doc.Dispose();
+            stamper.Dispose();
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

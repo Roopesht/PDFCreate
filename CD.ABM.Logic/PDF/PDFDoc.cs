@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace CD.ABM.Logic.PDF
 {
-    public class PDFDoc
+    public class PDFDoc : IDisposable
     {
         iTextSharp.text.Document doc = new Document();
         private PdfWriter writer;
@@ -67,9 +67,10 @@ namespace CD.ABM.Logic.PDF
         private void populatePDFConfig (String formId)
         {
             pdfConfig = new List<PDFConfig>();
+            bool addStaticConfigFlag = false;
 
             //Load the objects from .Net class
-            if (1 == 0)
+            if (addStaticConfigFlag)
             {
                 pdfConfig.Add(new PDFConfig("1"));
                 pdfConfig.Add(new PDFConfig("2"));
@@ -322,20 +323,31 @@ namespace CD.ABM.Logic.PDF
                 stamper.Close();
                 reader.Close();
             }
-            catch(Exception e)
+            catch(Exception)
             {}
             try
             {
                 writer.Flush();
                 writer.Close();
             }
-            catch (Exception ex)
+            catch (Exception )
             {}
             return true;
         }
         public void AddNewPage ()
         {
             doc.NewPage();
+        }
+
+        protected virtual void Dispose(bool flag)
+        {
+            stamper.Dispose();
+            doc.Dispose();
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

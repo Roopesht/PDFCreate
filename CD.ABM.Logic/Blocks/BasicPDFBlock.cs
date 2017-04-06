@@ -2,7 +2,6 @@
 
 namespace CD.ABM.Logic.Blocks
 {
-
     abstract class BasicPDFBlock : IBlock
     {
         protected UIConfig uiConfig = null;

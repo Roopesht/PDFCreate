@@ -8,7 +8,6 @@ namespace CD.ABM.Logic.POCO
         private InputTypes inputType;
         private String iDRef;
         private String identifer;
-        private String defaultValue;
         private Rectangle rect; 
 
         public Input AddRectangle (Rectangle _rect)
@@ -47,10 +46,6 @@ namespace CD.ABM.Logic.POCO
             this.inputType = _inputType;
             this.identifer = _identifier;
             this.rect = _rect;
-        }
-        public String DefaultValue
-        {
-            get { return defaultValue; }
         }
     }
 }

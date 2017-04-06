@@ -6,7 +6,7 @@ using System.Configuration;
 
 namespace CD.ABM.Logic.DALC
 {
-    class FormsDAL
+    class FormsDAL: IDisposable
     {
         String connString = ConfigurationManager.ConnectionStrings["FormsConn"].ToString();
         OleDbConnection conn = null;
@@ -62,6 +62,11 @@ namespace CD.ABM.Logic.DALC
             return items;
 
 
+        }
+
+        public void Dispose()
+        {
+            if (conn != null) conn.Dispose();
         }
     }
 }

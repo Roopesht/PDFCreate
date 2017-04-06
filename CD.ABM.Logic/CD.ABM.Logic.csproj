@@ -53,6 +53,8 @@
     <Compile Include="DALC\FormsDAL.cs" />
     <Compile Include="Drawing\DrawingArea.cs" />
     <Compile Include="Drawing\Helpers.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="PDFItems\Control.cs" />
     <Compile Include="PDF\PDFColor.cs" />
     <Compile Include="PDF\JavaScript.cs" />
     <Compile Include="PDF\PDFConfig.cs" />
@@ -71,12 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\rtayal\Downloads\DALC4NETSourceCode\DALC4NET\DALC4NET.csproj">
-      <Project>{e5ad1678-cf38-446a-a978-17254bd099de}</Project>
-      <Name>DALC4NET</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
