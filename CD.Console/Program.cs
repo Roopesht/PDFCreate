@@ -1,5 +1,6 @@
 ﻿using CD.ABM.Logic.PDF;
-using CD.ABM.Logic;
+using CD.ABM.Logic.Blocks;
+
 namespace CD.Console
 {
     class Program
@@ -9,7 +10,9 @@ namespace CD.Console
 
             //TestCreatePDF pdf = new TestCreatePDF();
             //SystemUtil.OpenFile(@"D:\a1.pdf");
-            CreatePDF();
+            ValueCreationBlock pdf = new ValueCreationBlock();
+            SystemUtil.OpenFile(@"D:\a1.pdf");
+            //CreatePDF();
             
         }
 
